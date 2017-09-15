@@ -1,6 +1,9 @@
 #include <iostream>
 #include <regex>
+#include <cstdlib>
 #include <vector>
+#include <fstream>
+#include <sstream>
 #include <string>
 
 using namespace std;
@@ -24,6 +27,29 @@ string find(string key)
   
 }
 
+void read_file(string filename)
+{
+    ifstream file;
+    
+    file.open(filename.c_str());
+    
+    if (!file.is_open())
+    {
+        cout<<"Can't open file"<<endl;
+    }
+    else
+    {
+       string store;
+       while (file.peek() != EOF)
+       {
+           getline (file, store);
+           cout<< store;
+       }
+    }
+    file.clear();
+    file.close();
+    
+}
 int main()
 {
     //command line for files
