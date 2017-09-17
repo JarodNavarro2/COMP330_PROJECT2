@@ -94,7 +94,7 @@ int main()
 	    if (!cmd.empty())
 	    {
 			cout << "Command recognized: " << cmd.at(0) << endl;
-			if (cmd.at(0) == '#')
+			if (cmd.at(0) == '@')
 			{
 				cmd.erase(0, 1);
 				topic_identifier(cmd, filename);
@@ -103,24 +103,47 @@ int main()
 			else if (cmd.at(0) == '!')
 			{
 			    cout<<"Command recognized: " << cmd.at(0)<<endl;
-			    cout<<"Enter the name of the file in which you want to make unique: ";
+			    cout<<"Enter the name of the file in which you want to make unique, or type '!' again to list a unique file: ";
 			    string unique; 
 			    cin>>unique;
 			    if (!unique.empty())
 			    {
-			        for (int i = 0; i < filename.size(); i++)
+			        if (unique == "!")
 			        {
-			            if (find(filename.begin(), filename.end(), unique) != filename.end())
+			            cout<<"Enter the filename"<<endl;
+			            string file;
+			            cin>>file;
+			            for (int i = 0; i < unique_filename.size(); i++)
 			            {
-			                cout<<"Topic found. Topic: "<<unique<<endl;
-			                cout<<"Removing from standard list to make it unique..."<<endl;
-			                unique_filename.push_back(unique);
-			                filename.erase(std::remove(filename.begin(), filename.end(), unique), filename.end());
-			                break;
+			                if (find(unique_filename.begin(), unique_filename.end(), file) !=unique_filename.end())
+			                {
+			                    cout<<"Unique topic found: " <<file<<endl;
+			                    break;
+			                }
+			                else
+			                {
+			                    cout<<"Topic has not yet been named unique"<<endl;
+			                    break;
+			                }
 			            }
-			            else
+			        }
+			        else
+			        {
+			            for (int i = 0; i < filename.size(); i++)
 			            {
-			              cout<<"Subjcet not added to notes"<<endl; 
+			                if (find(filename.begin(), filename.end(), unique) != filename.end())
+			                {
+			                    cout<<"Topic found. Topic: "<<unique<<endl;
+			                    cout<<"Removing from standard list to make it unique..."<<endl;
+			                    unique_filename.push_back(unique);
+			                    filename.erase(std::remove(filename.begin(), filename.end(), unique), filename.end());
+			                    break;
+			                }
+			                else
+			                {
+			                cout<<"Subject not added to notes"<<endl; 
+			                break;
+			                }
 			            }
 			        }
 			    }
