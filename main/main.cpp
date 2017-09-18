@@ -31,28 +31,81 @@ void topic_identifier(string type, vector<string> list)
 {
 	if (!type.empty())
 	{
-			//Insert method to list ALL topics
-			//Can't get all matching topics. as in if - or __are active.
-			//Put elements in vector into string, then use std::find_first_of to find the topic REGARDLESS of other characters
+			
+			for (int i = 0; i < list.size(); i++)
+			{
+				if (find(list.begin(), list.end(), type) !=list.end())
+				{
+					cout<<"Topic found. Topic: "<<type<<endl;
+					cout<<"Would you like to read your notes? 'Y/N"<<endl;
+					string in;
+					cin>>in;
+					if (in == "y" || in == "Y")
+					{
+						ifstream read;
+						read.open(type + ".txt");
+						if (!read.is_open())
+						{
+							cout<<"File doesn't exist"<<endl;
+							break;
+						}
+						else
+						{
+							string temp;
+							while (getline(read, temp))
+							{
+								cout<<temp<<endl;
+							}
+						}
+					}
+					break;
+				}
+				else
+				{
+					cout<<"Topic not found"<<endl;
+					break;
+				}
+			}
+			
 			
 	}
 }
 void topic_list(string type, vector<string> list)
 {
-	if (!type.empty())
+			//Insert method to list ALL topics
+			//Can't get all matching topics. as in if - or __are active.
+			//Put elements in vector into string, then use std::find_first_of to find the topic REGARDLESS of other characters
+}
+void add_notes(string subject, vector<string> list)
+{
+	if (!list.empty())
 	{
-		for (int i = 0; i < list.size(); i++)
-		{
-			if (find(list.begin(), list.end(), type) !=list.end())
+			for (int i = 0; i < list.size(); i++)
 			{
-				cout<<"Topic found. Topic: "<<type<<endl;
+				if (find(list.begin(), list.end(), subject) !=list.end())
+				{
+					cout<<"Topic found. Topic: "<<subject<<endl;
+					cout<<"Opening notes..."<<endl;
+					ofstream out;
+					out.open(subject + ".txt");
+					cout<<"File opened. Type in your notes (ENTER key ends notes)"<<endl;
+					string notes;
+					cin.ignore();
+					getline(cin, notes);
+					out<<notes;
+					out.close();
+					
+				}
+				else
+				{
+					cout<<"Topic not found"<<endl;
+					break;
+				}
 			}
-			else
-			{
-				cout<<"Topic not found"<<endl;
-				break;
-			}
-		}
+	}
+	else
+	{
+		cout<<"Nothing has been added"<<endl;
 	}
 }
 int main()
@@ -60,7 +113,7 @@ int main()
     //command line for files
    vector<string> filename;
    vector<string> unique_filename;
-    cout << "Command line active" << endl;
+    cout << "Command line active. Type 'help' for options" << endl;
 	string cmd;
 	bool stop = true;
 	while (stop = true)
@@ -143,7 +196,6 @@ int main()
 			        }
 			    }
 			    goto break_point;
-			    
 			}
 			else if (cmd.at(0) == '#')
 			{
@@ -151,6 +203,23 @@ int main()
 				cout<<"Listing all topics with matching description"<<endl;
 				cmd.erase(0, 1);
 				topic_list(cmd, filename);
+			}
+			else if (cmd == "add_notes")
+			{
+				cout<<"Enter the subject name"<<endl;
+				string subject;
+				cin>>subject;
+				add_notes(subject, filename);
+				cout<<"Notes added"<<endl;
+			}
+			else if (cmd== "help" || cmd == "Help")
+			{
+				cout<<"Type 'add' to add a subject for notes"<<endl;
+				cout<<"Type 'add_notes' to add details to already created note subjects"<<endl;
+				cout<<"Type '!' along with the note subject to make it unique"<<endl;
+				cout<<"Type '@' along with the note subject to read it"<<endl;
+				cout<<"Type '#' along with a subject to get all subjects related to it"<<endl;
+				cout<< "Type '^' to link two subjects together"<<endl;
 			}
 			else
 			{
@@ -160,5 +229,4 @@ int main()
 	    }
 	}
     return 1;
-    
 }
