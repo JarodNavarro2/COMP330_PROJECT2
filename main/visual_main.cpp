@@ -2,6 +2,7 @@
 #include <vector>
 #include <stack>
 #include <list>
+#include <dirent.h>
 #include <string>
 //THIS IS THE CODE I WAS DEMOING IN CLASS USING VISUAL STUDIO
 //MERGING THIS CODE WITH MAIN WILL OCCUR.
@@ -83,20 +84,46 @@ int main()
 	vector<string> filename;
 	vector<int> index;
 	string answer;
-	while (true)
-	{
-		cout << "Enter filename" << endl;
-		string file;
-		cin >> file;
-		filename.push_back(file);
-		int num = -1;
-		num++;
-		index.push_back(num);
-		cout << "Continue?" << endl;
-		cin >> answer;
-		if (answer == "no" || answer == "No")
+	string response;
+	
+	cout<<"Adding all files within current directory."<<endl;
+	
+	DIR*     dir;
+    dirent*  pdir;
+
+    dir = opendir(".");     // open current directory
+
+    while (pdir = readdir(dir)) 
+    {
+		string str = pdir->d_name;
+		string str2 = ".txt";
+		if(str.find(str2)!=string::npos)
 		{
-			break;
+         	filenames.push_back(str);
+		}
+    }
+    closedir(dir);
+
+	cout<<"Do you wish to manually input additional files? (Y)";
+	cin>>response;
+	
+	if(response=='Y')
+	{
+		while (true)
+		{
+			cout << "Enter filename" << endl;
+			string file;
+			cin >> file;
+			filename.push_back(file);
+			int num = -1;
+			num++;
+			index.push_back(num);
+			cout << "Continue?" << endl;
+			cin >> answer;
+			if (answer == "no" || answer == "No")
+			{
+				break;
+			}
 		}
 	}
 	/*for (int i = 0; i < 6; i++) {
