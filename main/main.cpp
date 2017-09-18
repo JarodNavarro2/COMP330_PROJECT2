@@ -113,7 +113,7 @@ int main()
     //command line for files
    vector<string> filename;
    vector<string> unique_filename;
-    cout << "Command line active. Type 'help' for options" << endl;
+    cout << "Command line active. Type 'help' for options or type 'exit'" << endl;
 	string cmd;
 	bool stop = true;
 	while (stop = true)
@@ -220,6 +220,11 @@ int main()
 				cout<<"Type '@' along with the note subject to read it"<<endl;
 				cout<<"Type '#' along with a subject to get all subjects related to it"<<endl;
 				cout<< "Type '^' to link two subjects together"<<endl;
+			}
+			else if (cmd == "exit")
+			{
+				stop = false;
+				break;
 			}
 			else
 			{
