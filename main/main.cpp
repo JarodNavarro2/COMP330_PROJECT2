@@ -10,37 +10,6 @@ using namespace std;
 
 
 //testing the commit of new line of code on existing .cpp file
-/*class notetaking
-{
-  string subject; bool unique; vector<notetaking> notes;
-  public: 
-  void set_name(string);
-  string get_name();
-  void is_unique(bool);
-  bool check_unique();
-  void add_notes(vector<notetaking>);
-  
-};
-void notetaking::set_name(string subject)
-{
-    this.subject=subject;
-}
-void notetaking::is_unique(bool unique)
-{
-    this.unique=unique;
-}
-string notetaking::get_name()
-{
-    return subject;
-}
-bool notetaking::check_unique()
-{
-    return unique;
-}
-void notetaking::add_notes(vector<notetaking> add)
-{
-    notes.push_back(add.begin(), add.end());
-}*/
 string find(string key)
 {
     regex keys("@!#");
@@ -62,22 +31,30 @@ void topic_identifier(string type, vector<string> list)
 {
 	if (!type.empty())
 	{
+			//Insert method to list ALL topics
+			//Can't get all matching topics. as in if - or __are active.
+			//Put elements in vector into string, then use std::find_first_of to find the topic REGARDLESS of other characters
+			
+	}
+}
+void topic_list(string type, vector<string> list)
+{
+	if (!type.empty())
+	{
 		for (int i = 0; i < list.size(); i++)
 		{
-			if (find(list.begin(), list.end(), type) != list.end())
+			if (find(list.begin(), list.end(), type) !=list.end())
 			{
-				cout << "Topic found. Topic: " << type << endl;
-				break;
+				cout<<"Topic found. Topic: "<<type<<endl;
 			}
 			else
 			{
-				cout << "Topic has not been added to notes" << endl;
+				cout<<"Topic not found"<<endl;
 				break;
 			}
 		}
 	}
 }
-
 int main()
 {
     //command line for files
@@ -93,7 +70,7 @@ int main()
 	    cin >> cmd;
 	    if (!cmd.empty())
 	    {
-			cout << "Command recognized: " << cmd.at(0) << endl;
+			cout << "Command recognized" <<endl;
 			if (cmd.at(0) == '@')
 			{
 				cmd.erase(0, 1);
@@ -167,6 +144,13 @@ int main()
 			    }
 			    goto break_point;
 			    
+			}
+			else if (cmd.at(0) == '#')
+			{
+				cout<<"Command recognized: "<<cmd.at(0)<<endl;
+				cout<<"Listing all topics with matching description"<<endl;
+				cmd.erase(0, 1);
+				topic_list(cmd, filename);
 			}
 			else
 			{
