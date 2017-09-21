@@ -106,6 +106,7 @@ void add_notes(string subject, vector<string> list)
                 getline(cin, notes);
                 out<<notes<<endl;
                 out.close();
+                break;
                 
             }
             else
@@ -164,7 +165,27 @@ int main()
                             if (find(unique_filename.begin(), unique_filename.end(), file) !=unique_filename.end())
                             {
                                 cout<<"Unique topic found: " <<file<<endl;
-                                break;
+                                cout<<"Would you like to read your notes? 'Y/N"<<endl;
+                                string in;
+                                cin>>in;
+                                if (in == "y" || in == "Y")
+                                {
+                                    ifstream read;
+                                    read.open(file + ".txt");
+                                    if (!read.is_open())
+                                    {
+                                        cout<<"File doesn't exist"<<endl;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        string temp;
+                                        while (getline(read, temp))
+                                        {
+                                            cout<<temp<<endl;
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
@@ -228,14 +249,16 @@ int main()
                 add_notes(subject, filename);
                 cout<<"Notes added"<<endl;
             }
-            else if(cmd == "^")
+            else if(cmd.at(0) == '^')
             {
                 while(true)
                 {
                     vector<string>subjectList;
                     string globalTopic;
-                    cout<<"Enter name of linked subject group: ";
-                    cin>>globalTopic;
+                    //cout<<"Enter name of linked subject group: ";
+                    //cin>>globalTopic;
+                    cmd.erase(0,1);
+                    globalTopic =cmd;
                     subjectList.push_back(globalTopic);
                 
                     cout<<"Select subjects to link from the list below one-by-one (enter 'exit' to complete linkage): "<<endl<<endl;
@@ -286,7 +309,7 @@ int main()
                 cout<<"Type 'add_notes' to add details to already created note subjects"<<endl;
                 cout<<"Type '!' along with the note subject to make it unique"<<endl;
                 cout<<"Type '@' along with the note subject to read it"<<endl;
-                cout<<"Type '#' along with a subject to get all subjects related to it"<<endl;
+                cout<<"Type '#' along with a subject to get all subjects related to it (must do ^ first)"<<endl;
                 cout<< "Type '^' to link subjects together"<<endl;
             }
             else if (cmd == "exit")
