@@ -9,26 +9,7 @@
 
 using namespace std;
 
-
-//testing the commit of new line of code on existing .cpp file
-string find(string key)
-{
-    regex keys("@!#");
-    if (regex_match (key,keys))
-    {
-        cout<<"Key is recognized"<<endl;
-        return key;
-        
-    }
-    else
-    {
-        cout<<"Wrong key or does not exist"<<endl;
-        
-    }
-    return "failed";
-    
-}
-void topic_identifier(string type, vector<string> list)
+void topic_identifier(string type, vector<string> list) //Finds topics, generates said topic.
 {
     if (!type.empty())
     {
@@ -71,7 +52,7 @@ void topic_identifier(string type, vector<string> list)
         
     }
 }
-void topic_list(string type, vector<vector<string>> list)
+void topic_list(string type, vector<vector<string>> list) //Finds topics under a general theme. Generates a report.
 {
     for(int i = 0; i<list.size(); i++)
     {
@@ -84,11 +65,8 @@ void topic_list(string type, vector<vector<string>> list)
             }
         }
     }
-    //Insert method to list ALL topics
-    //Can't get all matching topics. as in if - or __are active.
-    //Put elements in vector into string, then use std::find_first_of to find the topic REGARDLESS of other characters
 }
-void add_notes(string subject, vector<string> list)
+void add_notes(string subject, vector<string> list) //Method to add notes to already created topics.
 {
     if (!list.empty())
     {
@@ -121,7 +99,7 @@ void add_notes(string subject, vector<string> list)
         cout<<"Nothing has been added"<<endl;
     }
 }
-int main()
+int main() //Main method.
 {
     //command line for files
     vector<string> filename;
@@ -303,6 +281,22 @@ int main()
                 
                 
             }
+            else if (cmd =="report" || cmd=="Report")
+            {
+                cout<<"Lisiting all note topics"<<endl;
+                for (int i = 0; i < filename.size(); i++)
+                {
+                    cout<<filename[i]<<endl;
+                }
+                cout<<"Listing all global topics"<<endl;
+                for (int i = 0; i< links.size(); i++)
+                {
+                   for (int j = 0; j < links.size(); j++)
+                   {
+                       cout<<links[i][j]<<endl;
+                   }
+                }
+            }
             else if (cmd== "help" || cmd == "Help")
             {
                 cout<<"Type 'add' to add a subject for notes"<<endl;
@@ -311,6 +305,7 @@ int main()
                 cout<<"Type '@' along with the note subject to read it"<<endl;
                 cout<<"Type '#' along with a subject to get all subjects related to it (must do ^ first)"<<endl;
                 cout<< "Type '^' to link subjects together"<<endl;
+                cout<<"Type 'report' to list all of your note topics and global topics (excluding unique topics)"<<endl;
             }
             else if (cmd == "exit")
             {
