@@ -3,7 +3,7 @@ Repository for Project 1 reagarding the class COMP330
 *IMPORTANT*
 This project was done under two different operating systems. C9 does not support regular expressions, and Visual Studio/XCode do regular expressions in two different ways. So to combat this after talking with the professor, we did the equivalent to regex using nested loops.
 C9 also *does not* build the topological graph. C9 will crash due to memory leaks. HOWEVER, the graph works perfectly fine IF RUN on Visual Studio OR XCode. Due to this, one of these two IDE's is highly recommended.
-
+Creating test functions was not implemented. Neither of us has experience creating test functions. How the program was tested was through the "breaking" method. We ran the code and fed it several things that we thought would crash the program. If it crashed, we fixed it. We dedicated a day to this method. 
 
 Documentation for the app.
 -Main program is called "note.cpp". The folder "main" is an archive of our past attempts and collaboration. Also contains previous libraries. The application "main_app.cpp" is also an archive for previous work. "note.cpp" is the polished version.
