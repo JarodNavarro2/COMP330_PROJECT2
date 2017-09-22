@@ -1,12 +1,16 @@
 # COMP330_Project_1
 Repository for Project 1 reagarding the class COMP330
+*IMPORTANT*
+This project was done under two different operating systems. C9 does not support regular expressions, and Visual Studio/XCode do regular expressions in two different ways. So to combat this after talking with the professor, we did the equivalent to regex using nested loops.
+C9 also *does not* build the topological graph. C9 will crash due to memory leaks. HOWEVER, the graph works perfectly fine IF RUN on Visual Studio OR XCode. Due to this, one of these two IDE's is highly recommended.
+
 
 Documentation for the app.
 -Main program is called "note.cpp". The folder "main" is an archive of our past attempts and collaboration. Also contains previous libraries. The application "main_app.cpp" is also an archive for previous work. "note.cpp" is the polished version.
 --Libraries and past attemps left there for references.
 
--To run the program, Cloud 9 is the best thing. The program runs differently if ran on Visual Studio or Xcode. 
---We had different operating systems, so we made the program depend on Cloud 9
+-To run the program, Visual Studio or Xcode is recommended. C9 has glitches. 
+--We had different operating systems, so we made the program with C9 but C9 runs 95% of the program while Visual Studio or XCode run 100%
 
 *How to use the program*
 -The program is a command line. We took inspiration from the git command line.
