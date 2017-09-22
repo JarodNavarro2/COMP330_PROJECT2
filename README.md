@@ -39,3 +39,8 @@ Documentation for the app.
 
 -To get a report of EVERYTHING you typed, use the command 'report'
 --This will list ALL topics you created and ALl global topics ("#") you created.
+
+-To create a topological sort of your notes, use the 'map' command
+--*This will only work if note subjects and links have been created*
+
+

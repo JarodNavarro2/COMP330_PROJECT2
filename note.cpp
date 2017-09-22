@@ -485,6 +485,7 @@ int main() //Main method.
                 cout<<"Type '#' along with a subject to get all subjects related to it (must do ^ first)"<<endl;
                 cout<< "Type '^' to link subjects together"<<endl;
                 cout<< "Type 'url' to add url to topic or to view urls linked to topics"<<endl;
+                cout<<"Type 'map' to display a topological sort of you notes"<<endl;
                 cout<<"Type 'report' to list all of your note topics and global topics (excluding unique topics)"<<endl;
             }
             else if (cmd == "exit")
