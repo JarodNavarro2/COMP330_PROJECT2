@@ -396,7 +396,7 @@ int main() //Main method.
                 else
                 {
                     cout<<"Invalid command.";
-                    break;
+                    goto break_point;
                 }
                 
             }
