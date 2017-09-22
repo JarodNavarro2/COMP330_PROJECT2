@@ -2,7 +2,7 @@
 Repository for Project 1 reagarding the class COMP330
 
 Documentation for the app.
--Main program is called "main_app.cpp". The folder "main" is an archive of our past attempts and collaboration. Also contains previous libraries.
+-Main program is called "note.cpp". The folder "main" is an archive of our past attempts and collaboration. Also contains previous libraries. The application "main_app.cpp" is also an archive for previous work. "note.cpp" is the polished version.
 --Libraries and past attemps left there for references.
 
 -To run the program, Cloud 9 is the best thing. The program runs differently if ran on Visual Studio or Xcode. 
