@@ -1,6 +1,0 @@
-LOG FOR TEAM
-Jarod
-9-15: Worked on Visual studio create a command line based program to then import to C9
-9-16: Imported said command line into c9
-9-17: Worked on creating the classes and functionality needed to improve command line. Methods '@' '!' and '#' have been implemented. Thinking on how to implement the other needed requirements.
-9-18: Found a solution to implement other features (besides top sort). Partner created a directory function. Will tie two together.
