@@ -1,0 +1,506 @@
+#include <iostream>
+#include <regex>
+#include <cstdlib>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <stack>
+#include <list>
+
+#include <QApplication>
+
+using namespace std;
+
+QClass Graph //COURTESY OF GEEKSFORGEEKS.ORG
+{
+    QInt V;    // No. of vertices'
+
+    // Pointer to an array containing adjacency listsList
+    QList<QInt> *adj;
+
+    // A function used by topologicalSort
+    void topologicalSortUtil(QInt v, bool visited[], QStack<int> &Stack);
+public:
+    Graph(Qint V);   // Constructor
+
+    // function to add an edge to graph
+    void addEdge(QInt v, QInt w);
+
+    // prints a Topological Sort of the complete graph
+    void topologicalSort();
+};
+
+Graph::Graph(QInt V)
+{
+    this->V = V;
+    adj = new QList<QInt>[V];
+}
+
+void Graph::addEdge(QInt v, QInt w)
+{
+    adj[v].push_back(w); // Add w to v’s list.
+}
+
+// A recursive function used by topologicalSort
+void Graph::topologicalSortUtil(QInt v, bool visited[],
+                                QStack<QInt> &Stack)
+{
+    // Mark the current node as visited.
+    visited[v] = true;
+
+    // Recur for all the vertices adjacent to this vertex
+    QList<QInt>::iterator i;
+    for (i = adj[v].begin(); i != adj[v].end(); ++i)
+        if (!visited[*i])
+            topologicalSortUtil(*i, visited, Stack);
+
+    // Push current vertex to stack which stores result
+    Stack.push(v);
+}
+
+// The function to do Topological Sort. It uses recursive
+// topologicalSortUtil()
+void Graph::topologicalSort()
+{
+    QStack<QInt> Stack;
+
+    // Mark all the vertices as not visited
+    bool *visited = new bool[V];
+    for (QInt i = 0; i < V; i++)
+        visited[i] = false;
+
+    // Call the recursive helper function to store Topological
+    // Sort starting from all vertices one by one
+    for (QInt i = 0; i < V; i++)
+        if (visited[i] == false)
+            topologicalSortUtil(i, visited, Stack);
+
+    // Print contents of stack
+    while (Stack.empty() == false)
+    {
+        cout << Stack.top() << " ";
+        Stack.pop();
+    }
+}
+
+void topic_identifier(QString type, QVector<QString> QList) //Finds topics, generates said topic.
+{
+    if (!type.empty())
+    {
+
+        for (QInt i = 0; i < QList.size(); i++)
+        {
+            if (find(QList.begin(), QList.end(), type) !=QList.end())
+            {
+                cout<<"Topic found. Topic: "<<type<<endl;
+                cout<<"Would you like to read your notes? 'Y/N"<<endl;
+                QString in;
+                cin>>in;
+                if (in == "y" || in == "Y")
+                {
+                    ifstream read;
+                    read.open(type + ".txt");
+                    if (!read.is_open())
+                    {
+                        cout<<"File doesn't exist"<<endl;
+                        break;
+                    }
+                    else
+                    {
+                        QString temp;
+                        while (getline(read, temp))
+                        {
+                            cout<<temp<<endl;
+                        }
+                    }
+                }
+                break;
+            }
+            else
+            {
+                cout<<"Topic not found"<<endl;
+                break;
+            }
+        }
+
+
+    }
+}
+void topic_list(QString type, QVector<QVector<QString>> QList) //Finds topics under a general theme. Generates a report.
+{
+    for(QInt i = 0; i<QList.size(); i++)
+    {
+        if(QList[i][0]==type)
+        {
+            cout<<QList[i][0]<<endl<<endl;
+            for(Int j = 0; j<QList[i].size(); j++)
+            {
+                cout<<"-"<<QList[i][j]<<endl;
+            }
+        }
+    }
+}
+void add_notes(QString subject, QVector<QString> QList) //Method to add notes to already created topics.
+{
+    if (!QList.empty())
+    {
+        for (QInt i = 0; i < QList.size(); i++)
+        {
+            if (find(QList.begin(), QList.end(), subject) !=QList.end())
+            {
+                cout<<"Topic found. Topic: "<<subject<<endl;
+                cout<<"Opening notes..."<<endl;
+                ofstream out;
+                out.open(subject + ".txt");
+                cout<<"File opened. Type in your notes (ENTER key ends notes)"<<endl;
+                string notes;
+                cin.ignore();
+                getline(cin, notes);
+                out<<notes<<endl;
+                out.close();
+                break;
+
+            }
+            else
+            {
+                cout<<"Topic not found"<<endl;
+                break;
+            }
+        }
+    }
+    else
+    {
+        cout<<"Nothing has been added"<<endl;
+    }
+}
+
+void create_map(vector<vector<string>> link, vector<string>file)
+{
+    QInt u, v;
+    QVector<QInt> uVec;
+    QVector<QInt> vVec;
+    QVector<QString> totalVector;
+    for(QInt i = 0; i<link.size(); i++)
+    {
+        totalVector.push_back(link[i][0]);
+    }
+    for(QInt i = 0; i<file.size(); i++)
+    {
+        totalVector.push_back(file.at(i));
+    }
+    for(QInt i = 0; i<link.size(); i++)
+    {
+        u = find(totalVector.begin(), totalVector.end(), link[i][0]) - totalVector.begin();
+        for(QInt j = 1; j<link[i].size(); j++)
+        {
+            v = find(totalVector.begin(), totalVector.end(), link[i][j]) - totalVector.begin();
+            uVec.push_back(u);
+            vVec.push_back(v);
+        }
+
+    }
+    Graph g(uVec.size());
+    for(QInt i = 0; i<uVec.size();i++)
+    {
+        g.addEdge(uVec.at(i),vVec.at(i));
+    }
+    cout<<"Topological sort of current graph: "<<endl;
+    g.topologicalSort();
+
+}
+
+int main() //Main method.
+{
+    //command line for files
+    QApplication app (arc, argv);
+    QVector<QString> filename;
+    QVector<QString> unique_filename;
+    QVector<QVector<QString>> links;
+    QVector<QVector<QString>> urlLinks;
+    cout << "Command line active. "<<endl;
+    QString cmd;
+
+    bool stop = true;
+    while (stop == true)
+    {
+    break_point:
+        cout<<endl;
+        cout<<"Menu: Type 'help' for options or type 'exit'" << endl;
+        cmd.empty();
+        cin >> cmd;
+        if (!cmd.empty())
+        {
+            cout << "Command recognized" <<endl;
+            if (cmd.at(0) == '@')
+            {
+                cmd.erase(0, 1);
+                topic_identifier(cmd, filename);
+                goto break_point;
+            }
+            else if (cmd.at(0) == '!')
+            {
+                cout<<"Command recognized: " << cmd.at(0)<<endl;
+                cout<<"Enter the name of the file in which you want to make unique, or type '!' again to list a unique file: ";
+                QString unique;
+                cin>>unique;
+                if (!unique.empty())
+                {
+                    if (unique == "!")
+                    {
+                        cout<<"Enter the filename"<<endl;
+                        QString file;
+                        cin>>file;
+                        for (int i = 0; i < unique_filename.size(); i++)
+                        {
+                            if (find(unique_filename.begin(), unique_filename.end(), file) !=unique_filename.end())
+                            {
+                                cout<<"Unique topic found: " <<file<<endl;
+                                cout<<"Would you like to read your notes? 'Y/N"<<endl;
+                                QString in;
+                                cin>>in;
+                                if (in == "y" || in == "Y")
+                                {
+                                    ifstream read;
+                                    read.open(file + ".txt");
+                                    if (!read.is_open())
+                                    {
+                                        cout<<"File doesn't exist"<<endl;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        QString temp;
+                                        while (getline(read, temp))
+                                        {
+                                            cout<<temp<<endl;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                cout<<"Topic has not yet been named unique"<<endl;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (QInt i = 0; i < filename.size(); i++)
+                        {
+                            if (find(filename.begin(), filename.end(), unique) != filename.end())
+                            {
+                                cout<<"Topic found. Topic: "<<unique<<endl;
+                                cout<<"Removing from standard list to make it unique..."<<endl;
+                                unique_filename.push_back(unique);
+                                filename.erase(std::remove(filename.begin(), filename.end(), unique), filename.end());
+                                break;
+                            }
+                            else
+                            {
+                                cout<<"Subject not added to notes"<<endl;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (cmd == "add")
+            {
+                while (true)
+                {
+                    QString name;
+                    cout<<"Name of file: ";
+                    cin>> name;
+                    filename.push_back(name);
+                    cout<<"Continue to add?"<<endl;
+                    QString ans;
+                    cin>>ans;
+                    if (ans == "no" || ans == "No")
+                    {
+                        break;
+
+                    }
+                }
+                goto break_point;
+            }
+            else if (cmd.at(0) == '#')
+            {
+                cout<<"Command recognized: "<<cmd.at(0)<<endl;
+                cout<<"Listing all topics with matching description"<<endl;
+                cmd.erase(0, 1);
+                topic_list(cmd, links);
+            }
+            else if (cmd == "add_notes")
+            {
+                cout<<"Enter the subject name"<<endl;
+                QString subject;
+                cin>>subject;
+                add_notes(subject, filename);
+                cout<<"Notes added"<<endl;
+            }
+            else if (cmd == "url")
+            {
+                QVector<QString>urlList;
+                cout<<"Enter 'url' to add URL to topic. Enter 'view' to view URL listings with topics."<<endl;
+                QString resp;
+                cin>>resp;
+
+                if(resp=="url")
+                {
+                    while(true)
+                    {
+                        cout<<"Choose from the following topics in which to link a URL:"<<endl<<endl;
+                        for(int i = 0; i<filename.size(); i++)
+                        {
+                            cout<<filename.at(i)<<endl;
+                        }
+                        QString answr;
+                        cin>>answr;
+                        urlList.push_back(answr);
+                        QString s;
+                        cout<<endl;
+                        cout<<"Enter URLs for '"<<answr<<"' separated by <enter>. Type 'exit' to quit."<<endl;
+                        while(s != "exit")
+                        {
+                            cin>>s;
+                            if(s != "exit")
+                            {
+                                urlList.push_back(s);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        urlLinks.push_back(urlList);
+                        cout<<"Continue to add more URLs?"<<endl;
+                        QString ans;
+                        cin>>ans;
+
+                        if (ans == "no" || ans == "No")
+                        {
+                            break;
+                        }
+                    }
+                }
+                else if(resp=="view")
+                {
+                    for(QInt i = 0; i<urlLinks.size(); i++)
+                    {
+                        for(QInt j = 0; j<urlLinks[i].size(); j++)
+                        {
+                            cout<<urlLinks[i][j]<<endl;
+                        }
+                        cout<<endl;
+                    }
+                }
+                else
+                {
+                    cout<<"Invalid command.";
+                    break;
+                }
+
+            }
+            else if(cmd.at(0) == '^')
+            {
+                QVector<QString>subjectList;
+                QString globalTopic;
+                cmd.erase(0,1);
+                globalTopic =cmd;
+                subjectList.push_back(globalTopic);
+                while(true)
+                {
+                    cout<<"Select subjects to link from the list below one-by-one (enter 'exit' to complete linkage): "<<endl<<endl;
+
+                    for(QInt i = 0; i<filename.size(); i++)
+                    {
+                        cout<<filename.at(i)<<endl;
+                    }
+                    cout<<endl;
+                    QString s;
+                    while(s != "exit")
+                    {
+                        cin>>s;
+                        if(s != "exit")
+                        {
+                            subjectList.push_back(s);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    links.push_back(subjectList);
+                    cout<<"Added ";
+                    for(QInt i=1; i<subjectList.size(); i++)
+                    {
+                        cout<<subjectList.at(i)<<", ";
+                    }
+                    cout<<"to global topic "<<"'"<<subjectList.at(0)<<"'."<<endl;
+
+                    subjectList.clear();
+                    cout<<"Continue to create linkages?"<<endl;
+                    QString ans;
+                    cin>>ans;
+
+                    if (ans == "no" || ans == "No")
+                    {
+                        break;
+                    }
+                    cout<<"Enter name of linked subject group: ";
+                    cin>>globalTopic;
+                    subjectList.push_back(globalTopic);
+                }
+                goto break_point;
+
+
+            }
+            else if (cmd =="map" || cmd=="Map")
+            {
+                create_map(links, filename);
+
+            }
+            else if (cmd =="report" || cmd=="Report")
+            {
+
+                for(QInt i = 0; i<links.size(); i++)
+                {
+                    cout<<"Global topic: "<<links[i][0];
+                    cout<<endl<<endl;
+                    cout<<"Subtopics: "<<endl;
+                    for(int j = 1; j<links[i].size(); j++)
+                    {
+                        cout<<"-"<<links[i][j]<<endl;
+                    }
+                    cout<<endl;
+                }
+
+            }
+            else if (cmd== "help" || cmd == "Help")
+            {
+                cout<<"Type 'add' to add a subject for notes"<<endl;
+                cout<<"Type 'add_notes' to add details to already created note subjects"<<endl;
+                cout<<"Type '!' along with the note subject to make it unique"<<endl;
+                cout<<"Type '@' along with the note subject to read it"<<endl;
+                cout<<"Type '#' along with a subject to get all subjects related to it (must do ^ first)"<<endl;
+                cout<< "Type '^' to link subjects together"<<endl;
+                cout<< "Type 'url' to add url to topic or to view urls linked to topics"<<endl;
+                cout<<"Type 'report' to list all of your note topics and global topics (excluding unique topics)"<<endl;
+            }
+            else if (cmd == "exit")
+            {
+                stop = false;
+                break;
+            }
+            else
+            {
+                cout << "Command " << cmd.at(0) << " has not been implemented" << endl;
+            }
+
+        }
+    }
+    return app.exec();
+}
