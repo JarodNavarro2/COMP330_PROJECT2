@@ -26,7 +26,7 @@ public:
 public slots:
      void fileNew();
 protected:
-     //void closeEvent(QCloseEvent *e) override;
+     void closeEvent(QCloseEvent *e) override;
 private slots:
     void on_actionNew_triggered();
 
@@ -80,6 +80,32 @@ private slots:
     void clipboardDataChanged();
     void about();
     void printPreview(QPrinter *);
+    void on_actionBold_triggered();
+
+    void on_actionItalic_triggered();
+
+    void on_actionUnderline_triggered();
+
+    void on_actionPos_Left_triggered();
+
+    void on_actionPos_Right_triggered();
+
+    void on_actionPos_Center_triggered();
+
+    void on_actionJustify_triggered();
+
+    void on_actionColor_triggered();
+
+    void on_buttonAt_clicked();
+
+    void on_buttonPound_clicked();
+
+    void on_buttonArrow_clicked();
+
+    void on_buttonEx_clicked();
+
+    void on_buttonURL_clicked();
+
 private:
     Ui::MainWindow *ui;
     bool maybeSave();
@@ -102,9 +128,9 @@ private:
     QAction *actionUndo;
     QAction *actionRedo;*/
 #ifndef QT_NO_CLIPBOARD
-    QAction *actionCut;
-    QAction *actionCopy;
-    QAction *actionPaste;
+    //QAction *actionCut;
+    //QAction *actionCopy;
+    //QAction *actionPaste;
 #endif
 
     QComboBox *comboStyle;
@@ -113,7 +139,7 @@ private:
 
     QToolBar *tb;
     QString fileName;
-    QTextEdit *textEdit;
+    //QTextEdit *textEdit;
 
 };
 

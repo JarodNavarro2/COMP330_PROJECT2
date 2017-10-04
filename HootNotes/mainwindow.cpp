@@ -85,32 +85,37 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    textEdit = new QTextEdit(this);
-    connect(textEdit, &QTextEdit::currentCharFormatChanged,
+
+    connect(ui->textEdit, &QTextEdit::currentCharFormatChanged,
             this, &MainWindow::currentCharFormatChanged);
-    connect(textEdit, &QTextEdit::cursorPositionChanged,
+    connect(ui->textEdit, &QTextEdit::cursorPositionChanged,
             this, &MainWindow::cursorPositionChanged);
-    setCentralWidget(textEdit);
-    connect(textEdit->document(), &QTextDocument::modificationChanged,
+    connect(ui->textEdit->document(), &QTextDocument::modificationChanged,
             ui->actionSave, &QAction::setEnabled);
-    connect(textEdit->document(), &QTextDocument::modificationChanged,
+    connect(ui->textEdit->document(), &QTextDocument::modificationChanged,
             this, &QWidget::setWindowModified);
-    connect(textEdit->document(), &QTextDocument::undoAvailable,
+    connect(ui->textEdit->document(), &QTextDocument::undoAvailable,
             ui->actionUndo, &QAction::setEnabled);
-    connect(textEdit->document(), &QTextDocument::redoAvailable,
+    connect(ui->textEdit->document(), &QTextDocument::redoAvailable,
             ui->actionRedo, &QAction::setEnabled);
 
-    setWindowModified(textEdit->document()->isModified());
-    ui->actionSave->setEnabled(textEdit->document()->isModified());
-    ui->actionUndo->setEnabled(textEdit->document()->isUndoAvailable());
-    ui->actionRedo->setEnabled(textEdit->document()->isRedoAvailable());
+    setWindowModified(ui->textEdit->document()->isModified());
+    ui->actionSave->setEnabled(ui->textEdit->document()->isModified());
+    ui->actionUndo->setEnabled(ui->textEdit->document()->isUndoAvailable());
+    ui->actionRedo->setEnabled(ui->textEdit->document()->isRedoAvailable());
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    if (maybeSave())
+        e->accept();
+    else
+        e->ignore();
+}
 void MainWindow::on_actionNew_triggered()
 {
     fileNew();
@@ -153,27 +158,27 @@ void MainWindow::on_actionQuit_triggered()
 
 void MainWindow::on_actionUndo_triggered()
 {
-   textEdit->undo();
+   ui->textEdit->undo();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
-    textEdit->redo();
+    ui->textEdit->redo();
 }
 
 void MainWindow::on_actionCopy_triggered()
 {
-    textEdit->copy();
+    ui->textEdit->copy();
 }
 
 void MainWindow::on_actionPaste_triggered()
 {
-    textEdit->paste();
+    ui->textEdit->paste();
 }
 
 void MainWindow::on_actionCut_triggered()
 {
-    textEdit->cut();
+    ui->textEdit->cut();
 }
 
 void MainWindow::on_actionPlay_triggered()
@@ -200,10 +205,10 @@ bool MainWindow::load(const QString &f)
     QTextCodec *codec = Qt::codecForHtml(data);
     QString str = codec->toUnicode(data);
     if (Qt::mightBeRichText(str)) {
-        textEdit->setHtml(str);
+        ui->textEdit->setHtml(str);
     } else {
         str = QString::fromLocal8Bit(data);
-        textEdit->setPlainText(str);
+        ui->textEdit->setPlainText(str);
     }
 
     setCurrentFileName(f);
@@ -212,7 +217,7 @@ bool MainWindow::load(const QString &f)
 
 bool MainWindow::maybeSave()
 {
-    if (!textEdit->document()->isModified())
+    if (!ui->textEdit->document()->isModified())
         return true;
 
     const QMessageBox::StandardButton ret =
@@ -230,7 +235,7 @@ bool MainWindow::maybeSave()
 void MainWindow::setCurrentFileName(const QString &fileName)
 {
     this->fileName = fileName;
-    textEdit->document()->setModified(false);
+    ui->textEdit->document()->setModified(false);
 
     QString shownName;
     if (fileName.isEmpty())
@@ -245,7 +250,7 @@ void MainWindow::setCurrentFileName(const QString &fileName)
 void MainWindow::fileNew()
 {
     if (maybeSave()) {
-        textEdit->clear();
+        ui->textEdit->clear();
         setCurrentFileName(QString());
     }
 }
@@ -273,9 +278,9 @@ bool MainWindow::fileSave()
         return fileSaveAs();
 
     QTextDocumentWriter writer(fileName);
-    bool success = writer.write(textEdit->document());
+    bool success = writer.write(ui->textEdit->document());
     if (success) {
-        textEdit->document()->setModified(false);
+        ui->textEdit->document()->setModified(false);
         statusBar()->showMessage(tr("Wrote \"%1\"").arg(QDir::toNativeSeparators(fileName)));
     } else {
         statusBar()->showMessage(tr("Could not write to file \"%1\"")
@@ -304,11 +309,11 @@ void MainWindow::filePrint()
 #if !defined(QT_NO_PRINTER) && !defined(QT_NO_PRINTDIALOG)
     QPrinter printer(QPrinter::HighResolution);
     QPrintDialog *dlg = new QPrintDialog(&printer, this);
-    if (textEdit->textCursor().hasSelection())
+    if (ui->textEdit->textCursor().hasSelection())
         dlg->addEnabledOption(QAbstractPrintDialog::PrintSelection);
     dlg->setWindowTitle(tr("Print Document"));
     if (dlg->exec() == QDialog::Accepted)
-        textEdit->print(&printer);
+        ui->textEdit->print(&printer);
     delete dlg;
 #endif
 }
@@ -328,7 +333,7 @@ void MainWindow::printPreview(QPrinter *printer)
 #ifdef QT_NO_PRINTER
     Q_UNUSED(printer);
 #else
-    textEdit->print(printer);
+    ui->textEdit->print(printer);
 #endif
 }
 
@@ -347,7 +352,7 @@ void MainWindow::filePrintPdf()
     QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName(fileName);
-    textEdit->document()->print(&printer);
+    ui->textEdit->document()->print(&printer);
     statusBar()->showMessage(tr("Exported \"%1\"")
                              .arg(QDir::toNativeSeparators(fileName)));
 //! [0]
@@ -394,7 +399,7 @@ void MainWindow::textSize(const QString &p)
 
 void MainWindow::textStyle(int styleIndex)
 {
-    QTextCursor cursor = textEdit->textCursor();
+    QTextCursor cursor = ui->textEdit->textCursor();
 
     if (styleIndex != 0) {
         QTextListFormat::Style style = QTextListFormat::ListDisc;
@@ -456,7 +461,7 @@ void MainWindow::textStyle(int styleIndex)
 
 void MainWindow::textColor()
 {
-    QColor col = QColorDialog::getColor(textEdit->textColor(), this);
+    QColor col = QColorDialog::getColor(ui->textEdit->textColor(), this);
     if (!col.isValid())
         return;
     QTextCharFormat fmt;
@@ -468,13 +473,13 @@ void MainWindow::textColor()
 void MainWindow::textAlign(QAction *a)
 {
     if (a == ui->actionPos_Left)
-        textEdit->setAlignment(Qt::AlignLeft | Qt::AlignAbsolute);
+        ui->textEdit->setAlignment(Qt::AlignLeft | Qt::AlignAbsolute);
     else if (a == ui->actionPos_Center)
-        textEdit->setAlignment(Qt::AlignHCenter);
+        ui->textEdit->setAlignment(Qt::AlignHCenter);
     else if (a == ui->actionPos_Right)
-        textEdit->setAlignment(Qt::AlignRight | Qt::AlignAbsolute);
+        ui->textEdit->setAlignment(Qt::AlignRight | Qt::AlignAbsolute);
     else if (a == ui->actionJustify)
-        textEdit->setAlignment(Qt::AlignJustify);
+        ui->textEdit->setAlignment(Qt::AlignJustify);
 }
 
 void MainWindow::currentCharFormatChanged(const QTextCharFormat &format)
@@ -485,14 +490,14 @@ void MainWindow::currentCharFormatChanged(const QTextCharFormat &format)
 
 void MainWindow::cursorPositionChanged()
 {
-    alignmentChanged(textEdit->alignment());
+    alignmentChanged(ui->textEdit->alignment());
 }
 
 void MainWindow::clipboardDataChanged()
 {
 #ifndef QT_NO_CLIPBOARD
     if (const QMimeData *md = QApplication::clipboard()->mimeData())
-        actionPaste->setEnabled(md->hasText());
+        ui->actionPaste->setEnabled(md->hasText());
 #endif
 }
 
@@ -505,11 +510,11 @@ void MainWindow::about()
 
 void MainWindow::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 {
-    QTextCursor cursor = textEdit->textCursor();
+    QTextCursor cursor = ui->textEdit->textCursor();
     if (!cursor.hasSelection())
         cursor.select(QTextCursor::WordUnderCursor);
     cursor.mergeCharFormat(format);
-    textEdit->mergeCurrentCharFormat(format);
+    ui->textEdit->mergeCurrentCharFormat(format);
 }
 
 void MainWindow::fontChanged(const QFont &f)
@@ -538,4 +543,72 @@ void MainWindow::alignmentChanged(Qt::Alignment a)
         ui->actionPos_Right->setChecked(true);
     else if (a & Qt::AlignJustify)
         ui->actionJustify->setChecked(true);
+}
+
+void MainWindow::on_actionBold_triggered()
+{
+    //TODO: Fix glitch
+    //textBold();
+}
+
+void MainWindow::on_actionItalic_triggered()
+{
+    //TODO: Fix glitch
+    //textItalic();
+}
+
+void MainWindow::on_actionUnderline_triggered()
+{
+    //TODO: Fix glitch
+    //textUnderline();
+}
+
+void MainWindow::on_actionPos_Left_triggered()
+{
+    textAlign(ui->actionPos_Left);
+}
+
+void MainWindow::on_actionPos_Right_triggered()
+{
+    textAlign(ui->actionPos_Right);
+}
+
+void MainWindow::on_actionPos_Center_triggered()
+{
+    textAlign(ui->actionPos_Center);
+}
+
+void MainWindow::on_actionJustify_triggered()
+{
+    textAlign(ui->actionJustify);
+}
+
+void MainWindow::on_actionColor_triggered()
+{
+    //TODO: Implement color scheme
+}
+
+void MainWindow::on_buttonAt_clicked()
+{
+    //TODO: Implement @
+}
+
+void MainWindow::on_buttonPound_clicked()
+{
+    //TODO: Implement ##
+}
+
+void MainWindow::on_buttonArrow_clicked()
+{
+    //TODO: Implement ^^
+}
+
+void MainWindow::on_buttonEx_clicked()
+{
+    //TODO: Implement !
+}
+
+void MainWindow::on_buttonURL_clicked()
+{
+    //TODO: Implement URL
 }
