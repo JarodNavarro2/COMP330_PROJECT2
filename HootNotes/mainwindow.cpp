@@ -99,12 +99,23 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->textEdit->document(), &QTextDocument::redoAvailable,
             ui->actionRedo, &QAction::setEnabled);
 
+    QFont textFont("Helvetica");
+    textFont.setStyleHint(QFont::SansSerif);
+    ui->textEdit->setFont(textFont);
+    fontChanged(ui->textEdit->font());
+    colorChanged(ui->textEdit->textColor());
+    alignmentChanged(ui->textEdit->alignment());
+
     setWindowModified(ui->textEdit->document()->isModified());
     ui->actionSave->setEnabled(ui->textEdit->document()->isModified());
     ui->actionUndo->setEnabled(ui->textEdit->document()->isUndoAvailable());
     ui->actionRedo->setEnabled(ui->textEdit->document()->isRedoAvailable());
-}
+    setComboBoxs();
+    QPixmap pix(16,16);
+    pix.fill(Qt::black);
+    ui->actionColor->setIcon(pix);
 
+}
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -192,6 +203,30 @@ void MainWindow::on_actionPlay_triggered()
 void MainWindow::on_actionMenu_triggered()
 {
 
+}
+
+void MainWindow::setComboBoxs()
+{
+    ui->comboStyle->addItem("Standard");
+    ui->comboStyle->addItem("Bullet List (Disc)");
+    ui->comboStyle->addItem("Bullet List (Circle)");
+    ui->comboStyle->addItem("Bullet List (Square)");
+    ui->comboStyle->addItem("Ordered List (Decimal)");
+    ui->comboStyle->addItem("Ordered List (Alpha lower)");
+    ui->comboStyle->addItem("Ordered List (Alpha upper)");
+    ui->comboStyle->addItem("Ordered List (Roman lower)");
+    ui->comboStyle->addItem("Ordered List (Roman upper)");
+    typedef void (QComboBox::*QComboIntSignal)(int);
+    connect(ui->comboStyle, static_cast<QComboIntSignal>(&QComboBox::activated), this, &MainWindow::textStyle);
+    typedef void (QComboBox::*QComboStringSignal)(const QString &);
+    connect(ui->comboFont, static_cast<QComboStringSignal>(&QComboBox::activated), this, &MainWindow::textFamily);
+
+    const QList<int> standardSizes = QFontDatabase::standardSizes();
+    foreach (int size, standardSizes)
+        ui->comboSize->addItem(QString::number(size));
+    ui->comboSize->setCurrentIndex(standardSizes.indexOf(QApplication::font().pointSize()));
+
+    connect(ui->comboSize, static_cast<QComboStringSignal>(&QComboBox::activated), this, &MainWindow::textSize);
 }
 bool MainWindow::load(const QString &f)
 {
@@ -500,14 +535,6 @@ void MainWindow::clipboardDataChanged()
         ui->actionPaste->setEnabled(md->hasText());
 #endif
 }
-
-void MainWindow::about()
-{
-    QMessageBox::about(this, tr("About"), tr("This example demonstrates Qt's "
-        "rich text editing facilities in action, providing an example "
-        "document for you to experiment with."));
-}
-
 void MainWindow::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 {
     QTextCursor cursor = ui->textEdit->textCursor();
@@ -519,8 +546,8 @@ void MainWindow::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 
 void MainWindow::fontChanged(const QFont &f)
 {
-    comboFont->setCurrentIndex(comboFont->findText(QFontInfo(f).family()));
-    comboSize->setCurrentIndex(comboSize->findText(QString::number(f.pointSize())));
+    ui->comboFont->setCurrentIndex(ui->comboFont->findText(QFontInfo(f).family()));
+    ui->comboSize->setCurrentIndex(ui->comboSize->findText(QString::number(f.pointSize())));
     ui->actionBold->setChecked(f.bold());
     ui->actionItalic->setChecked(f.italic());
     ui->actionUnderline->setChecked(f.underline());
@@ -548,19 +575,31 @@ void MainWindow::alignmentChanged(Qt::Alignment a)
 void MainWindow::on_actionBold_triggered()
 {
     //TODO: Fix glitch
-    //textBold();
+    textBold();
+    QFont bold;
+    bold.setBold(true);
+    ui->actionBold->setFont(bold);
+    ui->actionBold->setCheckable(true);
 }
 
 void MainWindow::on_actionItalic_triggered()
 {
     //TODO: Fix glitch
-    //textItalic();
+    textItalic();
+    QFont italic;
+    italic.setItalic(true);
+    ui->actionItalic->setFont(italic);
+    ui->actionItalic->setCheckable(true);
 }
 
 void MainWindow::on_actionUnderline_triggered()
 {
     //TODO: Fix glitch
-    //textUnderline();
+    textUnderline();
+    QFont underline;
+    underline.setUnderline(true);
+    ui->actionUnderline->setFont(underline);
+    ui->actionUnderline->setCheckable(true);
 }
 
 void MainWindow::on_actionPos_Left_triggered()
@@ -586,6 +625,7 @@ void MainWindow::on_actionJustify_triggered()
 void MainWindow::on_actionColor_triggered()
 {
     //TODO: Implement color scheme
+    textColor();
 }
 
 void MainWindow::on_buttonAt_clicked()

@@ -28,6 +28,8 @@ public slots:
 protected:
      void closeEvent(QCloseEvent *e) override;
 private slots:
+    void setComboBoxs();
+
     void on_actionNew_triggered();
 
     void on_actionOpen_triggered();
@@ -63,7 +65,6 @@ private slots:
     void filePrint();
     void filePrintPreview();
     void filePrintPdf();
-    //void playAudio();
 
     void textBold();
     void textUnderline();
@@ -78,7 +79,6 @@ private slots:
     void cursorPositionChanged();
 
     void clipboardDataChanged();
-    void about();
     void printPreview(QPrinter *);
     void on_actionBold_triggered();
 
@@ -115,31 +115,10 @@ private:
     void fontChanged(const QFont &f);
     void colorChanged(const QColor &c);
     void alignmentChanged(Qt::Alignment a);
-
-    /*QAction *actionSave;
-    QAction *actionTextBold;
-    QAction *actionTextUnderline;
-    QAction *actionTextItalic;
-    QAction *actionTextColor;
-    QAction *actionAlignLeft;
-    QAction *actionAlignCenter;
-    QAction *actionAlignRight;
-    QAction *actionAlignJustify;
-    QAction *actionUndo;
-    QAction *actionRedo;*/
 #ifndef QT_NO_CLIPBOARD
-    //QAction *actionCut;
-    //QAction *actionCopy;
-    //QAction *actionPaste;
-#endif
 
-    QComboBox *comboStyle;
-    QFontComboBox *comboFont;
-    QComboBox *comboSize;
-
-    QToolBar *tb;
+#endif  
     QString fileName;
-    //QTextEdit *textEdit;
 
 };
 
