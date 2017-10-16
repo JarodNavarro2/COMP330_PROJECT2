@@ -60,6 +60,7 @@
 #include <QFontDatabase>
 #include <QMenu>
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include <QMenuBar>
 #include <QTextCodec>
 #include <QTextEdit>
@@ -76,7 +77,7 @@
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 
-
+#include "menudialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -115,6 +116,8 @@ MainWindow::MainWindow(QWidget *parent) :
     pix.fill(Qt::black);
     ui->actionColor->setIcon(pix);
 
+    playlist = new QMediaPlaylist;
+    playlist->addMedia(QUrl("qrc:/Music/music/Safe&Sound.mp3"));
 }
 MainWindow::~MainWindow()
 {
@@ -194,17 +197,32 @@ void MainWindow::on_actionCut_triggered()
 
 void MainWindow::on_actionPlay_triggered()
 {
-    QMediaPlayer *media = new QMediaPlayer;
-    media->setMedia(QUrl("qrc:/Music/music/Safe&Sound.mp3"));
-    media->setVolume(100);
-    media->play();
+    player = new QMediaPlayer;
+    player->setPlaylist(playlist);
+    player->setVolume(100);
+    player->play();
+}
+
+void MainWindow::on_actionResume_triggered()
+{
+    player->play();
 }
 
 void MainWindow::on_actionMenu_triggered()
 {
-
+    MenuDialog *menu = new MenuDialog;
+    menu->show();
 }
 
+void MainWindow::on_actionStop_triggered()
+{
+    player->stop();
+}
+
+void MainWindow::on_actionPause_triggered()
+{
+    player->pause();
+}
 void MainWindow::setComboBoxs()
 {
     ui->comboStyle->addItem("Standard");
@@ -626,29 +644,4 @@ void MainWindow::on_actionColor_triggered()
 {
     //TODO: Implement color scheme
     textColor();
-}
-
-void MainWindow::on_buttonAt_clicked()
-{
-    //TODO: Implement @
-}
-
-void MainWindow::on_buttonPound_clicked()
-{
-    //TODO: Implement ##
-}
-
-void MainWindow::on_buttonArrow_clicked()
-{
-    //TODO: Implement ^^
-}
-
-void MainWindow::on_buttonEx_clicked()
-{
-    //TODO: Implement !
-}
-
-void MainWindow::on_buttonURL_clicked()
-{
-    //TODO: Implement URL
 }

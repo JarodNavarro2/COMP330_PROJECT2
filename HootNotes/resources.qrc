@@ -43,8 +43,12 @@
         <file>images/mac/zoomout.png</file>
         <file>images/mac/background.png</file>
         <file>images/win/background.png</file>
+        <file>images/win/background.jpg</file>
     </qresource>
     <qresource prefix="/Music">
         <file>music/Safe&amp;Sound.mp3</file>
+    </qresource>
+    <qresource prefix="/Menu">
+        <file>menu/menu.html</file>
     </qresource>
 </RCC>

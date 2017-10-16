@@ -10,6 +10,8 @@ class QTextEdit;
 class QTextCharFormat;
 class QMenu;
 class QPrinter;
+class QMediaPlayer;
+class QMediaPlaylist;
 QT_END_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -22,6 +24,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     bool load(const QString &f);
+    QMediaPlaylist *playlist;
+    QMediaPlayer *player;
     ~MainWindow();
 public slots:
      void fileNew();
@@ -96,15 +100,11 @@ private slots:
 
     void on_actionColor_triggered();
 
-    void on_buttonAt_clicked();
+    void on_actionStop_triggered();
 
-    void on_buttonPound_clicked();
+    void on_actionPause_triggered();
 
-    void on_buttonArrow_clicked();
-
-    void on_buttonEx_clicked();
-
-    void on_buttonURL_clicked();
+    void on_actionResume_triggered();
 
 private:
     Ui::MainWindow *ui;
