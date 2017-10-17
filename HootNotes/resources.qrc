@@ -44,6 +44,7 @@
         <file>images/mac/background.png</file>
         <file>images/win/background.png</file>
         <file>images/win/background.jpg</file>
+        <file>images/HootIcon.png</file>
     </qresource>
     <qresource prefix="/Music">
         <file>music/Safe&amp;Sound.mp3</file>

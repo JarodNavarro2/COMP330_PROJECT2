@@ -76,7 +76,7 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
-
+#include <QToolTip>
 #include "menudialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -86,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: rgb(222, 241, 255);");
 
     connect(ui->textEdit, &QTextEdit::currentCharFormatChanged,
             this, &MainWindow::currentCharFormatChanged);

@@ -10,16 +10,32 @@
     <height>438</height>
    </rect>
   </property>
+  <property name="palette">
+   <palette>
+    <active/>
+    <inactive/>
+    <disabled/>
+   </palette>
+  </property>
+  <property name="font">
+   <font>
+    <family>Century Gothic</family>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Hoot Notes Beta v1.02</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/Images/images/HootIcon.png</normaloff>:/Images/images/HootIcon.png</iconset>
   </property>
   <property name="autoFillBackground">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <property name="styleSheet">
    <string notr="true">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 border-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(255, 255, 255, 255), stop:0.1 rgba(255, 255, 255, 255), stop:0.2 rgba(255, 176, 176, 167), stop:0.3 rgba(255, 151, 151, 92), stop:0.4 rgba(255, 125, 125, 51), stop:0.5 rgba(255, 76, 76, 205), stop:0.52 rgba(255, 76, 76, 205), stop:0.6 rgba(255, 180, 180, 84), stop:1 rgba(255, 255, 255, 0));
-background-image: url(&quot;:/Images/images/win/background.png);&quot;)
+background-image:url(:/Images/images/win/background.jpg);
 &lt;ui version=&quot;4.0&quot;&gt;
  &lt;class&gt;MainWindow&lt;/class&gt;
  &lt;widget class=&quot;QMainWindow&quot; name=&quot;MainWindow&quot;&gt;
@@ -576,23 +592,66 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboStyle"/>
+       <widget class="QComboBox" name="comboStyle">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Position you text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(222, 241, 255);
+color:(rgb(0, 0, 0));
+font: 8pt &quot;Century Gothic&quot;;</string>
+        </property>
+       </widget>
       </item>
       <item>
-       <widget class="QFontComboBox" name="comboFont"/>
+       <widget class="QFontComboBox" name="comboFont">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fonts&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboSize"/>
+       <widget class="QComboBox" name="comboSize">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of Font&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(222, 241, 255);
+color:(rgb(0, 0, 0));
+font: 8pt &quot;Century Gothic&quot;;</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
      <widget class="QTextEdit" name="textEdit">
       <property name="autoFillBackground">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+       <string notr="true">background-color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
       </property>
      </widget>
     </item>
@@ -604,10 +663,25 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
      <x>0</x>
      <y>0</y>
      <width>669</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Century Gothic&quot;;
+background-color: rgb(222, 241, 255);
+color: rgb(0, 0, 0);</string>
+   </property>
    <widget class="QMenu" name="menuFile">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">selection-color: rgb(0, 0, 0);
+selection-background-color: rgb(255, 255, 255);</string>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
@@ -624,6 +698,16 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">selection-color: rgb(0, 0, 0);
+selection-background-color: rgb(255, 255, 255);</string>
+    </property>
     <property name="title">
      <string>Edit</string>
     </property>
@@ -635,6 +719,16 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
     <addaction name="actionPaste"/>
    </widget>
    <widget class="QMenu" name="menuStressed">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">selection-color: rgb(0, 0, 0);
+selection-background-color: rgb(255, 255, 255);</string>
+    </property>
     <property name="title">
      <string>Stressed...</string>
     </property>
@@ -644,12 +738,35 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
     <addaction name="actionResume"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Need help?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">selection-color: rgb(0, 0, 0);
+selection-background-color: rgb(255, 255, 255);</string>
+    </property>
     <property name="title">
      <string>Help</string>
     </property>
     <addaction name="actionMenu"/>
    </widget>
    <widget class="QMenu" name="menuTools">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">selection-color: rgb(0, 0, 0);
+selection-background-color: rgb(255, 255, 255);</string>
+    </property>
     <property name="title">
      <string>Tools</string>
     </property>
@@ -678,6 +795,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>New</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Create New &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
    </property>
@@ -689,6 +809,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    </property>
    <property name="text">
     <string>Open</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open a document&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -702,6 +825,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Save </string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save your work&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
@@ -709,6 +835,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
   <action name="actionSave_as">
    <property name="text">
     <string>Save as... </string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save specifically&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
@@ -722,6 +851,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Print </string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
    </property>
@@ -729,6 +861,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
   <action name="actionPrint_Preview">
    <property name="text">
     <string>Print Preview</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Preview&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="actionPDF">
@@ -739,6 +874,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>PDF</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Convert to PDF&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Shift+P</string>
    </property>
@@ -746,6 +884,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
   <action name="actionQuit">
    <property name="text">
     <string>Quit </string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -759,6 +900,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Undo your mistake&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
    </property>
@@ -770,6 +914,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    </property>
    <property name="text">
     <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Redo your mistake&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Y</string>
@@ -783,6 +930,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Copy</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copy onto clipboard&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
    </property>
@@ -794,6 +944,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    </property>
    <property name="text">
     <string>Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Paste&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
@@ -807,6 +960,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Cut</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cut onto your clipboard&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
    </property>
@@ -818,6 +974,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    </property>
    <property name="text">
     <string>Play</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start the music&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="actionMenu">
@@ -833,6 +992,12 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Bold</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bold&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bold&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
    </property>
@@ -844,6 +1009,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    </property>
    <property name="text">
     <string>Italic</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Italic&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
@@ -857,6 +1025,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Underline</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Underline&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+U</string>
    </property>
@@ -868,6 +1039,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    </property>
    <property name="text">
     <string>Pos Left</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Position left&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+L</string>
@@ -881,6 +1055,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Pos Right</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Position right&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
    </property>
@@ -892,6 +1069,9 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    </property>
    <property name="text">
     <string>Pos Center</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Position Center&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+E</string>
@@ -905,25 +1085,43 @@ background-image: url(&quot;:/Images/images/win/background.png);&quot;)
    <property name="text">
     <string>Justify</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Justify&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
   </action>
   <action name="actionColor">
    <property name="text">
     <string>Color</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change color&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+J</string>
    </property>
   </action>
   <action name="actionStop">
    <property name="text">
     <string>Stop</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop the song&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
   </action>
   <action name="actionPause">
    <property name="text">
     <string>Pause</string>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pause the song&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
   </action>
   <action name="actionResume">
    <property name="text">
     <string>Resume</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resume the song&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>
