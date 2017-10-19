@@ -202,11 +202,19 @@ void MainWindow::on_actionPlay_triggered()
     player->setPlaylist(playlist);
     player->setVolume(100);
     player->play();
+    is_playing = true;
 }
 
 void MainWindow::on_actionResume_triggered()
 {
-    player->play();
+    if (is_playing == true)
+    {
+        player->play();
+    }
+    else
+    {
+        QMessageBox::warning(this, "Error", "Media not playing");
+    }
 }
 
 void MainWindow::on_actionMenu_triggered()
@@ -217,12 +225,28 @@ void MainWindow::on_actionMenu_triggered()
 
 void MainWindow::on_actionStop_triggered()
 {
-    player->stop();
+    if (is_playing == true)
+    {
+        player->stop();
+        is_playing=false;
+    }
+    else
+    {
+        QMessageBox::warning(this, "Error", "Media not playing");
+    }
+
 }
 
 void MainWindow::on_actionPause_triggered()
 {
-    player->pause();
+    if (is_playing == true)
+    {
+        player->pause();
+    }
+    else
+    {
+        QMessageBox::warning(this, "Error", "Media not playing");
+    }
 }
 void MainWindow::setComboBoxs()
 {

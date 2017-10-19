@@ -115,6 +115,7 @@ private:
     void fontChanged(const QFont &f);
     void colorChanged(const QColor &c);
     void alignmentChanged(Qt::Alignment a);
+    bool is_playing = false;
 #ifndef QT_NO_CLIPBOARD
 
 #endif  
